@@ -9,19 +9,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบบันทึกข้อมูลสมาชิก</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <div class="container mt-3">
     <h2>ระบบบันทึกข้อมูลสมาชิก</h2>
     <?php
-    if (isset($_GET['status'])) {
-        if ($_GET['status'] == 'success') {
-            echo "<p style='color: green;'>บันทึกข้อมูลเรียบร้อยแล้ว!</p>";
-        } elseif ($_GET['status'] == 'error') {
-            echo "<p style='color: red;'>เกิดข้อผิดพลาดในการบันทึกข้อมูล</p>";
+        if (isset($_GET['status'])) {
+            if ($_GET['status'] == 'success') {
+                echo "<p style='color: green;'>บันทึกข้อมูลเรียบร้อยแล้ว!</p>";
+            } elseif ($_GET['status'] == 'error') {
+                echo "<p style='color: red;'>เกิดข้อผิดพลาดในการบันทึกข้อมูล</p>";
+            }
         }
-    }
     ?>
-    <a href="showgraph.php" style=" background-color: #007bff; border-radius: 5px;">ดูกราฟ</a><br></br>
+    <a href="showgraph.php" style=" background-color: #007bff; border-radius: 5px;color:white">ดูกราฟ</a><br></br>
 
     <form action="savedata.php" method="POST" enctype="multipart/form-data">
         <label for="title_prefix">คำนำหน้าชื่อ:</label>
@@ -41,5 +43,6 @@
         <input type="submit" value="บันทึก" name="savedata">
     </form>
     <?php include('showuser.php'); ?>
+    </div>
 </body>
 </html>

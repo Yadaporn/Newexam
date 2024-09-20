@@ -1,39 +1,20 @@
 <?php
-    require_once 'config/db.php';
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    if (isset($_GET['sortold'])) {
-        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(birthdate) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(birthdate, '%m%d')) AS age FROM users WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' ORDER BY age DESC";            
-    } 
-    elseif (isset($_GET['sortyoung'])) {
-        $sql = "SELECT *, YEAR(CURDATE()) - YEAR(birthdate) - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(birthdate, '%m%d')) AS age FROM users WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' ORDER BY age ASC";            
-    }
-    elseif (isset($_GET['sort_updated'])) {
-        $sql = "SELECT * FROM users WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' ORDER BY updated_at DESC";             
-    }
-    else {
-        $sql = "SELECT * FROM users WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' ORDER BY updated_at ASC";
-    }
-    $result = $conn->query($sql);
+    include 'config/db.php';
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางข้อมูล</title>
+    <title>ตารางรายรับรายจ่าย</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 <body>
 <div class="container mt-5">
-    <h2>ตารางข้อมูล</h2>
-    <form method="GET" action="">
-        <label for="search">ค้นหา:</label>
-        <input type="text" id="search" name="search" value="<?php echo isset($search) ? $search : ''; ?>">
-        <input type="submit" value="ค้นหา">
-    </form>
+    <h2>ตารางรายรับรายจ่าย</h2>
+   
     <form method="GET" action="">
         <input type="submit" name="sortold" value="เรียงตามอายุมากไปน้อย">
         <input type="submit" name="sortyoung" value="เรียงตามอายุน้อยไปมาก">
@@ -48,6 +29,7 @@
                 <th>วันเดือนปีเกิด</th>
                 <th>รูปโปรไฟล์</th>
                 <th>วันเวลาที่ปรับปรุงข้อมูลล่าสุด</th>
+                <th>ข้อมูลรายรับรายจ่าย</th>
                 <th>action</th>
             </tr>
         </thead>
@@ -64,6 +46,9 @@
                     echo "<td>" . $row['birthdate'] . "</td>";
                     echo "<td><img src='profile_img/" . $row['profile_image'] . "' alt='Profile Image' width='100'></td>";
                     echo "<td>" . $row['updated_at'] . "</td>";
+                    echo "<td>";
+                    echo "<a href='showinex.php?id=" . $row['id'] . "'>ดูรายละเอียด</a> | ";
+                    echo "</td>";
                     echo "<td>";
                     echo "<a href='editdata.php?id=" . $row['id'] . "'>แก้ไข</a> | ";
                     echo "<a href='deletedata.php?id=" . $row['id'] . "' onclick='return confirm(\"คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?\")'>ลบ</a>";
